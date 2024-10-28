@@ -103,11 +103,7 @@
   </licenses>
   <!-- End elements of Oracle products and licenses -->
   
-  <parent>
-    <groupId>com.oracle.weblogic.archetype</groupId>
-    <artifactId>wls-common</artifactId>
-    <version>14.1.1-0-0</version>
-  </parent>
+
   <dependencies>
     <dependency>
       <groupId>javax</groupId>
@@ -133,7 +129,12 @@
 	  <scope>provided</scope>
 	</dependency>
   </dependencies>
-  <build>
+  <properties>
+    <oracleMiddlewareHome>C:\Oracle\Middleware\Oracle_Home</oracleMiddlewareHome>
+      <oracleUsername>weblogic</oracleUsername>
+      <oraclePassword>Passw0rd</oraclePassword>
+    </properties>
+    <build>
     <finalName>basicWebappEjb</finalName>
     <plugins>
       <plugin>
@@ -168,6 +169,13 @@
         -->
         <configuration> 
           <middlewareHome>${oracleMiddlewareHome}</middlewareHome>
+            <source>${project.build.directory}/${project.build.finalName}.${project.packaging}</source>
+            <targets>AdminServer</targets>
+            <verbose>true</verbose>
+            <upload>true</upload>
+            <name>${project.build.finalName}</name>
+            <user>${oracleUsername}</user>
+            <password>${oraclePassword}</password>
         </configuration> 
         <executions>
           <!--Deploy the application to the server-->
@@ -182,7 +190,7 @@
               <user>${oracleUsername}</user> 
               <password>${oraclePassword}</password>
               <!--The location of the file or directory to be deployed-->
-              <source>${project.build.directory}/${project.build.finalName}.${project.packaging}</source>
+              <source>${project.build.directory}/basicWebappEjb.war</source>
               <!--The target servers where the application is deployed. Here use the plugin's default value AdminServer-->
               <!--targets>${oracleServerName}</targets-->
               <verbose>true</verbose> 
