@@ -84,13 +84,13 @@
                     <appClientDeployDir>${project.build.directory}/appClientDeployDir</appClientDeployDir>
                     <middlewareHome>/opt/Oracle/Middleware/Oracle_Home</middlewareHome>-->
                     <verbose>true</verbose>
-                    <user>weblogic</user>
+                    <!--<user>weblogic</user>
                     <password>welcome1</password>
                     <adminurl>t3://localhost:7001</adminurl>
-                    <targets>AdminServer</targets>
+                    <targets>AdminServer</targets>-->
                     <source>${project.build.directory}/ear-module-1.0-SNAPSHOT</source>
-                    <name>${project.build.finalName}</name>
-                    <upload>true</upload>
+                    <!--<name>${project.build.finalName}</name>
+                    <upload>true</upload>-->
                 </configuration>
                 <executions>
                     <execution>
