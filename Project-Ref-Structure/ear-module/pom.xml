@@ -75,6 +75,33 @@
                     <defaultLibBundleDir>lib</defaultLibBundleDir>            
                 </configuration>
             </plugin>
+            <plugin> 
+                <groupId>com.oracle.weblogic</groupId>
+                <artifactId>weblogic-maven-plugin</artifactId>
+                <version>14.1.1-0-0</version> 
+                <configuration>
+                    <!--<appDeployDir>${project.build.directory}/appDeployDir</appDeployDir>
+                    <appClientDeployDir>${project.build.directory}/appClientDeployDir</appClientDeployDir>
+                    <middlewareHome>/opt/Oracle/Middleware/Oracle_Home</middlewareHome>-->
+                    <verbose>true</verbose>
+                    <user>weblogic</user>
+                    <password>welcome1</password>
+                    <adminurl>t3://localhost:7001</adminurl>
+                    <targets>AdminServer</targets>
+                    <source>${project.build.directory}/ear-module-1.0-SNAPSHOT</source>
+                    <name>${project.build.finalName}</name>
+                    <upload>true</upload>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>weblogic-appc</id> 
+                        <phase>pre-integration-test</phase> 
+                        <goals>
+                            <goal>appc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
