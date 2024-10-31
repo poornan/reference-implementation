@@ -53,6 +53,7 @@
                             <artifactId>ejb-module</artifactId>
                         </ejbModule>
                     </modules>
+                    <defaultLibBundle>lib</defaultLibBundle>            
                 </configuration>
             </plugin>
         </plugins>
