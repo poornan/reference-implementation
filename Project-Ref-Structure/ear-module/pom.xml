@@ -72,11 +72,9 @@
                             <artifactId>business-module0</artifactId>
                         </ejbModule>
                     </modules>
-                    <defaultLibBundle>lib</defaultLibBundle>            
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>            
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
-
 </project>
