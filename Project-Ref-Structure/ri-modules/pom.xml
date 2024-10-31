@@ -1,0 +1,25 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>lk.anan.ri</groupId>
+    <artifactId>ri-modules</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <parent>
+        <groupId>lk.anan.ri</groupId>
+        <artifactId>ri-projects</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <modules>
+        <module>web-module0</module>
+        <module>presentation-module0</module>
+        <module>business-module0</module>
+        <module>general-module0</module>
+        <module>persistence-module0</module>
+    </modules>
+
+</project>

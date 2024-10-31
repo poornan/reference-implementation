@@ -12,21 +12,39 @@
     <dependencies>
         <dependency>
             <groupId>lk.anan.ri</groupId>
-            <artifactId>ejb-module</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <type>ejb</type>
-        </dependency>
-        <dependency>
-            <groupId>lk.anan.ri</groupId>
             <artifactId>war-module</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>war</type>
         </dependency>
         <dependency>
             <groupId>lk.anan.ri</groupId>
-            <artifactId>war1-module</artifactId>
+            <artifactId>web-module0</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>lk.anan.ri</groupId>
+            <artifactId>presentation-module0</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>lk.anan.ri</groupId>
+            <artifactId>business-module0</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>lk.anan.ri</groupId>
+            <artifactId>general-module0</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>lk.anan.ri</groupId>
+            <artifactId>persistence-module0</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
         </dependency>
     </dependencies>
 
@@ -46,12 +64,12 @@
                         </webModule>
                         <webModule>
                             <groupId>lk.anan.ri</groupId>
-                            <artifactId>war1-module</artifactId> 
+                            <artifactId>web-module0</artifactId> 
                             <unpack>true</unpack>
                         </webModule>
                         <ejbModule>
                             <groupId>lk.anan.ri</groupId>
-                            <artifactId>ejb-module</artifactId>
+                            <artifactId>business-module0</artifactId>
                         </ejbModule>
                     </modules>
                     <defaultLibBundle>lib</defaultLibBundle>            

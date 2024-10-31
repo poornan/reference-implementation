@@ -1,19 +1,17 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>lk.anan.ri</groupId>
-    <artifactId>ri-projects</artifactId>
+    <artifactId>presentation-module0</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
-
+    <packaging>jar</packaging>
+<parent>
+    <groupId>lk.anan.ri</groupId>
+    <artifactId>ri-modules</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</parent>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
-
-    <modules>
-        <module>ri-modules</module>
-        <module>war-module</module>
-        <module>ear-module</module>
-    </modules>
 
 </project>
