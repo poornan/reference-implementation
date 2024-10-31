@@ -41,10 +41,12 @@
                         <webModule>
                             <groupId>lk.anan.ri</groupId>
                             <artifactId>war-module</artifactId> 
+                            <unpack>true</unpack>
                         </webModule>
                         <webModule>
                             <groupId>lk.anan.ri</groupId>
                             <artifactId>war1-module</artifactId> 
+                            <unpack>true</unpack>
                         </webModule>
                         <ejbModule>
                             <groupId>lk.anan.ri</groupId>
