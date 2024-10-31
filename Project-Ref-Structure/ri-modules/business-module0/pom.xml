@@ -3,7 +3,7 @@
     <groupId>lk.anan.ri</groupId>
     <artifactId>business-module0</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>ejb</packaging>
+    <packaging>ejb</packaging> 
     <parent>
         <groupId>lk.anan.ri</groupId>
         <artifactId>ri-modules</artifactId>
