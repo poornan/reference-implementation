@@ -13,6 +13,7 @@
     <modules>
         <module>ejb-module</module>
         <module>war-module</module>
+        <module>war1-module</module>
         <module>ear-module</module>
     </modules>
 
