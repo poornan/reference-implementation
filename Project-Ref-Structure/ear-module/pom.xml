@@ -41,6 +41,7 @@
                         <webModule>
                             <groupId>lk.anan.ri</groupId>
                             <artifactId>war-module</artifactId> 
+                            <context-root>/</context-root>
                             <unpack>true</unpack>
                         </webModule>
                         <webModule>
