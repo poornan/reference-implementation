@@ -11,6 +11,7 @@
 
     <modules>
         <module>instrument</module>
+        <module>data-viewer</module>
     </modules>
 
     <dependencyManagement>
