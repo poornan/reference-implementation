@@ -2,12 +2,33 @@ package lk.anan.ri.instrument;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.UUID;
 
 public class ExampleTest {
+    DataDumpHealper dataDumpHealper = new DataDumpHealper();
 
     @Test
-    public void testAddition() {
-        int sum = 1 + 1;
-        assertEquals(2, sum, "1 + 1 should equal 2");
+    public void testDataDumpHealperClass() {
+        assertEquals("DataDumpHealper", dataDumpHealper.getClass().getSimpleName(),
+                "DataDumpHealper class should be available");
+    }
+
+    @Test
+    public void testDataDumpHealperHasMethodCreateDump() {
+        try {
+            dataDumpHealper.getClass().getMethod("createDump");
+        } catch (NoSuchMethodException e) {
+            throw new AssertionError("Method createDump should be available in DataDumpHealper class");
+        }
+    }
+
+
+    @Test
+    public void testDataDumpHealperHasMethodCreateDump1() {
+        assertThrows(UnsupportedOperationException.class, ()->{
+            dataDumpHealper.createDump(new DataImpl(), UUID.randomUUID().toString());
+        });
     }
 }
