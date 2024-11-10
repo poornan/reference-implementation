@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View XML</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <link rel="stylesheet" th:href="@{/css/prism.min.css}" />
+</head>
+<body>
+    <h1>XML Content</h1>
+    <pre><code class="language-xml" th:text="${xmlContent}"></code></pre>
+    <a href="/files">Back to List</a>
+    <div class="logout-container">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
+    <script th:src="@{/js/prism.min.js}"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-xml.min.js"></script> -->
+</body>
+</html>
