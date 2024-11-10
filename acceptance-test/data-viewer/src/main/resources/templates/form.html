@@ -10,7 +10,9 @@
         <input type="hidden" th:field="*{id}" />
         <div>
             <label for="path">Path:</label>
-            <input type="text" id="path" th:field="*{path}" />
+            <input type="text" id="path" th:field="*{path}" th:readonly="${file.id != null}" 
+            th:class="input-disabled" />
+                   <!-- th:class="${file.id != null ? 'input-disabled' : ''}" /> -->
         </div>
         <div>
             <label for="datatype">Datatype:</label>

@@ -111,3 +111,10 @@ a.back-link {
 .logout-btn:hover {
     background-color: #c82333;
 }
+
+.input-disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+    border: 1px solid #ced4da;
+    color: #6c757d;
+}
