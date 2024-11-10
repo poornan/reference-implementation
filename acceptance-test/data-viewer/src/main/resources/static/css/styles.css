@@ -92,3 +92,22 @@ a.back-link {
     text-align: center;
     margin-top: 20px;
 }
+
+.logout-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}
+
+.logout-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background-color: #c82333;
+}

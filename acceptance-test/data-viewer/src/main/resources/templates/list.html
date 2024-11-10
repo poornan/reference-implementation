@@ -28,5 +28,10 @@
         </tbody>
     </table>
     <a href="/files/new">Add New File</a>
+    <div class="logout-container">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
 </body>
 </html>

@@ -21,5 +21,10 @@
         </div>
     </form>
     <a href="/files">Back to List</a>
+    <div class="logout-container">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
 </body>
 </html>
