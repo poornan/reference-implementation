@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lk.anan.ri.dataviewer.model.FileEntity;
 import lk.anan.ri.dataviewer.repository.FileEntityRepository;
 
@@ -16,6 +17,9 @@ public class FileEntityController {
 
     @Autowired
     private FileEntityRepository repository;
+
+    @Autowired
+    private HttpServletRequest request;
 
     @GetMapping
     public List<FileEntity> getAllFiles() {
@@ -34,6 +38,8 @@ public class FileEntityController {
 
     @PostMapping
     public FileEntity createFile(@RequestBody FileEntity fileEntity) {
+        String currentUser = request.getUserPrincipal().getName();
+        fileEntity.setCreatedBy(currentUser);
         return repository.save(fileEntity);
     }
 
@@ -46,6 +52,7 @@ public class FileEntityController {
             updatedFile.setDatatype(fileDetails.getDatatype());
             updatedFile.setModuleOwner(fileDetails.getModuleOwner()); 
             updatedFile.setModuleLead(fileDetails.getModuleLead());   
+            updatedFile.setCreatedBy(fileDetails.getCreatedBy());
             return ResponseEntity.ok(repository.save(updatedFile));
         } else {
             return ResponseEntity.notFound().build();

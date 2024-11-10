@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lk.anan.ri.dataviewer.model.FileEntity;
 import lk.anan.ri.dataviewer.repository.FileEntityRepository;
 
@@ -17,6 +18,9 @@ public class WebController {
 
     @Autowired
     private FileEntityRepository repository;
+
+    @Autowired
+    private HttpServletRequest request;
 
     @GetMapping
     public String getAllFiles(Model model) {
@@ -33,6 +37,8 @@ public class WebController {
 
     @PostMapping
     public String createFile(FileEntity fileEntity) {
+        String currentUser = request.getUserPrincipal().getName();
+        fileEntity.setCreatedBy(currentUser); 
         repository.save(fileEntity);
         return "redirect:/files";
     }
@@ -55,6 +61,9 @@ public class WebController {
             FileEntity updatedFile = fileEntity.get();
             updatedFile.setPath(fileDetails.getPath());
             updatedFile.setDatatype(fileDetails.getDatatype());
+            updatedFile.setModuleOwner(fileDetails.getModuleOwner());
+            updatedFile.setModuleLead(fileDetails.getModuleLead());
+            updatedFile.setCreatedBy(fileDetails.getCreatedBy());
             repository.save(updatedFile);
         }
         return "redirect:/files";

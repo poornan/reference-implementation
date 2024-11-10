@@ -16,6 +16,7 @@ public class FileEntity {
     private String datatype;
     private String moduleOwner; 
     private String moduleLead;  
+    private String createdBy; 
 
     // Getters and Setters
     public Long getId() {
@@ -56,5 +57,13 @@ public class FileEntity {
 
     public void setModuleLead(String moduleLead) {
         this.moduleLead = moduleLead;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 }
