@@ -3,6 +3,7 @@ package lk.anan.ri.dataviewer.controller;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
 
 import java.util.Optional;
@@ -13,15 +14,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lk.anan.ri.dataviewer.config.SecurityConfig;
 import lk.anan.ri.dataviewer.model.FileEntity;
 import lk.anan.ri.dataviewer.repository.FileEntityRepository;
 
 @WebMvcTest(FileEntityController.class)
+@Import(SecurityConfig.class)
 public class FileEntityControllerTests {
 
     @Autowired
@@ -41,6 +46,7 @@ public class FileEntityControllerTests {
     }
 
     @Test
+     @WithMockUser(username = "admin")
     void testGetAllFiles() throws Exception {
         given(repository.findAll()).willReturn(Collections.singletonList(fileEntity));
 
@@ -52,6 +58,7 @@ public class FileEntityControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "admin")
     void testGetFileById() throws Exception {
         given(repository.findById(1L)).willReturn(Optional.of(fileEntity));
 
@@ -63,6 +70,7 @@ public class FileEntityControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "admin")
     void testCreateFile() throws Exception {
         given(repository.save(any(FileEntity.class))).willReturn(fileEntity);
 
@@ -76,6 +84,7 @@ public class FileEntityControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "admin")
     void testUpdateFile() throws Exception {
         given(repository.findById(1L)).willReturn(Optional.of(fileEntity));
         given(repository.save(any(FileEntity.class))).willReturn(fileEntity);
@@ -93,6 +102,7 @@ public class FileEntityControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "admin")
     void testDeleteFile() throws Exception {
         given(repository.findById(1L)).willReturn(Optional.of(fileEntity));
 
