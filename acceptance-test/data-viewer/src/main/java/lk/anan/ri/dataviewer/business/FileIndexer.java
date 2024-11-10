@@ -31,19 +31,6 @@ public class FileIndexer {
         this.watchKeys = new HashMap<>();
     }
 
-    // @EventListener(ApplicationReadyEvent.class)
-    // public void onApplicationReady() {
-    // // Insert data
-    // FileEntity fileEntity = new FileEntity();
-    // fileEntity.setPath("/path/to/file");
-    // fileEntity.setDatatype("text");
-    // fileEntity.setModuleOwner("Owner Name " + Math.random());
-    // fileEntity.setModuleLead("Lead Name");
-
-    // fileEntityRepository.save(fileEntity);
-
-    // // Add more data as needed
-    // }
     private void scanAndIndexFiles() {
         try (Stream<Path> paths = Files.walk(Paths.get(fileScanPath))) {
             paths.filter(Files::isRegularFile)
@@ -77,53 +64,6 @@ public class FileIndexer {
         watchDirectory(Paths.get(fileScanPath));
     }
 
-    // private void watchDirectory() {
-
-    //     try {
-    //         WatchService watchService = FileSystems.getDefault().newWatchService();
-    //         Path path = Paths.get(fileScanPath);
-    //         path.register(watchService, StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_MODIFY);
-
-    //         Thread thread = new Thread(() -> {
-    //             while (true) {
-    //                 WatchKey key;
-    //                 try {
-    //                     key = watchService.take();
-    //                 } catch (InterruptedException e) {
-    //                     return;
-    //                 }
-
-    //                 for (WatchEvent<?> event : key.pollEvents()) {
-    //                     WatchEvent.Kind<?> kind = event.kind();
-
-    //                     if (kind == StandardWatchEventKinds.OVERFLOW) {
-    //                         continue;
-    //                     }
-
-    //                     WatchEvent<Path> ev = (WatchEvent<Path>) event;
-    //                     Path fileName = ev.context();
-    //                     Path child = path.resolve(fileName);
-
-    //                     if (Files.isRegularFile(child) && child.toString().endsWith(".xml")) {
-    //                         scanAndIndexFiles();
-    //                     }
-    //                 }
-
-    //                 boolean valid = key.reset();
-    //                 if (!valid) {
-    //                     break;
-    //                 }
-    //             }
-    //         });
-
-    //         thread.setDaemon(true);
-    //         thread.start();
-    //     } catch (IOException e) {
-    //         e.printStackTrace();
-    //     }
-    // }
-
-
 
     public void watchDirectory(Path startPath) throws IOException, InterruptedException {
         registerAll(startPath);
@@ -156,9 +96,9 @@ public class FileIndexer {
                     }
                 }
 
-                if (Files.isRegularFile(child) && child.toString().endsWith(".xml")) {
+                // if (Files.isRegularFile(child) && child.toString().endsWith(".xml")) {
                     scanAndIndexFiles();
-                }
+                // }
             }
 
             boolean valid = key.reset();

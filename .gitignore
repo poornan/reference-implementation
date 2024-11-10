@@ -211,3 +211,6 @@ ri-j2ee-simple/.vscode/settings.json
 acceptance-test/.vscode/settings.json
 acceptance-test/data-viewer/data/filedb.mv.db
 acceptance-test/data-viewer/data/filedb.mv.db
+acceptance-test/data-viewer/data/dump/String-Mytype4/uuidq/.indexed
+acceptance-test/data-viewer/data/dump/String-Mytype5/uuidq/.indexed
+acceptance-test/data-viewer/data/dump/String-Mytype5/uuidq/caller-calls.xml
