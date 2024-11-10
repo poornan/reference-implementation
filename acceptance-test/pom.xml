@@ -8,23 +8,15 @@
     <name>Acceptance Test Parent</name>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-
+    <parent>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-parent</artifactId>
+				<version>3.3.5</version>
+    </parent>
     <modules>
         <module>instrument</module>
         <module>data-viewer</module>
     </modules>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-parent</artifactId>
-				<version>3.3.5</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <build>
         <pluginManagement>

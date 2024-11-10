@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>File List</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+    <h1>File List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Path</th>
+                <th>Datatype</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="file : ${files}">
+                <td th:text="${file.id}"></td>
+                <td th:text="${file.path}"></td>
+                <td th:text="${file.datatype}"></td>
+                <td>
+                    <a th:href="@{/files/edit/{id}(id=${file.id})}">Edit</a>
+                    <a th:href="@{/files/delete/{id}(id=${file.id})}">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="/files/new">Add New File</a>
+</body>
+</html>

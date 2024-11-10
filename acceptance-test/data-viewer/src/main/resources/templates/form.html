@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>File Form</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+    <h1 th:text="${file.id == null ? 'Create File' : 'Edit File'}"></h1>
+    <form th:action="@{/files}" th:object="${file}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <div>
+            <label for="path">Path:</label>
+            <input type="text" id="path" th:field="*{path}" />
+        </div>
+        <div>
+            <label for="datatype">Datatype:</label>
+            <input type="text" id="datatype" th:field="*{datatype}" />
+        </div>
+        <div>
+            <button type="submit">Save</button>
+        </div>
+    </form>
+    <a href="/files">Back to List</a>
+</body>
+</html>
