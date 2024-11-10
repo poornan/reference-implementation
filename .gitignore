@@ -216,3 +216,4 @@ acceptance-test/data-viewer/data/dump/String-Mytype5/uuidq/.indexed
 acceptance-test/data-viewer/data/dump/String-Mytype5/uuidq/caller-calls.xml
 acceptance-test/data-viewer/data/dump/**/.indexed
 acceptance-test/data-viewer/data/dump/**/*.xml
+acceptance-test/data-viewer/data/filedb.trace.db
