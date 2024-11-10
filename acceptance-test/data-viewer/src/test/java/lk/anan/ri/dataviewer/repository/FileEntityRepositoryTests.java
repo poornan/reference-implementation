@@ -21,8 +21,8 @@ public class FileEntityRepositoryTests {
         FileEntity fileEntity = new FileEntity();
         fileEntity.setPath("/path/to/file");
         fileEntity.setDatatype("text");
-        fileEntity.setModuleOwner("Owner Name"); // Set new field
-        fileEntity.setModuleLead("Lead Name");   // Set new field
+        fileEntity.setDevelopers("Owner Name"); // Set new field
+        fileEntity.setLead("Lead Name");   // Set new field
 
         repository.save(fileEntity);
 
@@ -31,7 +31,7 @@ public class FileEntityRepositoryTests {
         FileEntity savedFileEntity = fileEntities.get(0);
         assertThat(savedFileEntity.getPath()).isEqualTo("/path/to/file");
         assertThat(savedFileEntity.getDatatype()).isEqualTo("text");
-        assertThat(savedFileEntity.getModuleOwner()).isEqualTo("Owner Name"); // Assert new field
-        assertThat(savedFileEntity.getModuleLead()).isEqualTo("Lead Name");   // Assert new field
+        assertThat(savedFileEntity.getDevelopers()).isEqualTo("Owner Name"); // Assert new field
+        assertThat(savedFileEntity.getLead()).isEqualTo("Lead Name");   // Assert new field
     }
 }

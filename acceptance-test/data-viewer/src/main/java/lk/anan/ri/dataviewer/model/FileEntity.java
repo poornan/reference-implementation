@@ -14,8 +14,8 @@ public class FileEntity {
 
     private String path;
     private String datatype;
-    private String moduleOwner; 
-    private String moduleLead;  
+    private String developers; 
+    private String lead;  
     private String createdBy; 
 
     // Getters and Setters
@@ -43,20 +43,20 @@ public class FileEntity {
         this.datatype = datatype;
     }
 
-    public String getModuleOwner() {
-        return moduleOwner;
+    public String getDevelopers() {
+        return developers;
     }
 
-    public void setModuleOwner(String moduleOwner) {
-        this.moduleOwner = moduleOwner;
+    public void setDevelopers(String moduleOwner) {
+        this.developers = moduleOwner;
     }
 
-    public String getModuleLead() {
-        return moduleLead;
+    public String getLead() {
+        return lead;
     }
 
-    public void setModuleLead(String moduleLead) {
-        this.moduleLead = moduleLead;
+    public void setLead(String moduleLead) {
+        this.lead = moduleLead;
     }
 
     public String getCreatedBy() {

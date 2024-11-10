@@ -66,8 +66,8 @@ public class WebController {
             FileEntity updatedFile = fileEntity.get();
             updatedFile.setPath(fileDetails.getPath());
             updatedFile.setDatatype(fileDetails.getDatatype());
-            updatedFile.setModuleOwner(fileDetails.getModuleOwner());
-            updatedFile.setModuleLead(fileDetails.getModuleLead());
+            updatedFile.setDevelopers(fileDetails.getDevelopers());
+            updatedFile.setLead(fileDetails.getLead());
             updatedFile.setCreatedBy(fileDetails.getCreatedBy());
             repository.save(updatedFile);
         }

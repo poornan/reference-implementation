@@ -45,8 +45,8 @@ public class FileEntityControllerTests {
         fileEntity.setId(1L);
         fileEntity.setPath("/path/to/file");
         fileEntity.setDatatype("text");
-        fileEntity.setModuleOwner("Owner Name"); 
-        fileEntity.setModuleLead("Lead Name");   
+        fileEntity.setDevelopers("Owner Name"); 
+        fileEntity.setLead("Lead Name");   
     }
 
     @Test
@@ -101,8 +101,8 @@ public class FileEntityControllerTests {
 
         fileEntity.setPath("/new/path/to/file");
         fileEntity.setDatatype("binary");
-        fileEntity.setModuleOwner("New Owner"); 
-        fileEntity.setModuleLead("New Lead");
+        fileEntity.setDevelopers("New Owner"); 
+        fileEntity.setLead("New Lead");
 
         mockMvc.perform(put("/api/files/1")
                 .contentType(MediaType.APPLICATION_JSON)

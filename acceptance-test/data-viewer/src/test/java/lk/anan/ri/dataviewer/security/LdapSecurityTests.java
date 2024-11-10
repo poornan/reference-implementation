@@ -1,9 +1,12 @@
 package lk.anan.ri.dataviewer.security;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
@@ -11,16 +14,22 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.concurrent.TimeUnit;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
+//(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
+//@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class LdapSecurityTests {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
     public void loginWithValidUserThenAuthenticated() throws Exception {
         mockMvc.perform(formLogin()
                 .user("admin")
@@ -29,16 +38,20 @@ public class LdapSecurityTests {
                 .andExpect(status().isFound())
                 .andExpect(redirectedUrl("/"))
                 .andExpect(authenticated().withUsername("admin"));
+                System.out.println("Completed test: loginWithValidUserThenAuthenticated");
     }
 
     @Test
-public void loginWithInvalidUserThenUnauthenticated() throws Exception {
-    mockMvc.perform(formLogin()
-            .user("invaliduser")
-            .password("wrongpassword"))
-            .andDo(MockMvcResultHandlers.print())
-            .andExpect(status().isFound())
-            .andExpect(redirectedUrl("/login?error"))
-            .andExpect(unauthenticated());
-}
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    public void loginWithInvalidUserThenUnauthenticated() throws Exception {
+        mockMvc.perform(formLogin()
+                .user("invaliduser")
+                .password("wrongpassword"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isFound())
+                .andExpect(redirectedUrl("/login?error"))
+                .andExpect(unauthenticated());
+                System.out.println("Completed test: loginWithInvalidUserThenUnauthenticated");
+    
+    }
 }

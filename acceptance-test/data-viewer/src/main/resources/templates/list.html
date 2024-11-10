@@ -11,8 +11,8 @@
             <tr>
                 <th>ID</th>
                 <th>Datatype</th>
-                <th>Module Owner</th>
-                <th>Module Lead</th>
+                <th>Developers</th>
+                <th>Lead</th>
                 <th>Actions</th>
                 <th>Path</th>
             </tr>
@@ -21,8 +21,8 @@
             <tr th:each="file : ${files}">
                 <td th:text="${file.id}"></td>
                 <td th:text="${file.datatype}"></td>
-                <td th:text="${file.moduleOwner}"></td>
-                <td th:text="${file.moduleLead}"></td>
+                <td th:text="${file.developers}"></td>
+                <td th:text="${file.lead}"></td>
                 <td>
                     <a th:href="@{/files/edit/{id}(id=${file.id})}">Edit</a>
                     <a th:href="@{/files/delete/{id}(id=${file.id})}">Delete</a>
