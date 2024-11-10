@@ -210,3 +210,4 @@ buildNumber.properties
 ri-j2ee-simple/.vscode/settings.json
 acceptance-test/.vscode/settings.json
 acceptance-test/data-viewer/data/filedb.mv.db
+acceptance-test/data-viewer/data/filedb.mv.db

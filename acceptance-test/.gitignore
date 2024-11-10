@@ -31,3 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
+acceptance-test/data-viewer/data/filedb.mv.db
