@@ -12,6 +12,8 @@
                 <th>ID</th>
                 <th>Path</th>
                 <th>Datatype</th>
+                <th>Module Owner</th>
+                <th>Module Lead</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -20,6 +22,8 @@
                 <td th:text="${file.id}"></td>
                 <td th:text="${file.path}"></td>
                 <td th:text="${file.datatype}"></td>
+                <td th:text="${file.moduleOwner}"></td>
+                <td th:text="${file.moduleLead}"></td>
                 <td>
                     <a th:href="@{/files/edit/{id}(id=${file.id})}">Edit</a>
                     <a th:href="@{/files/delete/{id}(id=${file.id})}">Delete</a>

@@ -14,6 +14,8 @@ public class FileEntity {
 
     private String path;
     private String datatype;
+    private String moduleOwner; 
+    private String moduleLead;  
 
     // Getters and Setters
     public Long getId() {
@@ -38,5 +40,21 @@ public class FileEntity {
 
     public void setDatatype(String datatype) {
         this.datatype = datatype;
+    }
+
+    public String getModuleOwner() {
+        return moduleOwner;
+    }
+
+    public void setModuleOwner(String moduleOwner) {
+        this.moduleOwner = moduleOwner;
+    }
+
+    public String getModuleLead() {
+        return moduleLead;
+    }
+
+    public void setModuleLead(String moduleLead) {
+        this.moduleLead = moduleLead;
     }
 }

@@ -17,16 +17,21 @@ public class FileEntityRepositoryTests {
     private FileEntityRepository repository;
 
     @Test
-    void testSaveAndFind() {
+    public void testSaveAndFindFileEntity() {
         FileEntity fileEntity = new FileEntity();
         fileEntity.setPath("/path/to/file");
         fileEntity.setDatatype("text");
+        fileEntity.setModuleOwner("Owner Name"); // Set new field
+        fileEntity.setModuleLead("Lead Name");   // Set new field
 
         repository.save(fileEntity);
 
-        List<FileEntity> foundEntities = repository.findAll();
-        assertThat(foundEntities).hasSize(1);
-        assertThat(foundEntities.get(0).getPath()).isEqualTo("/path/to/file");
-        assertThat(foundEntities.get(0).getDatatype()).isEqualTo("text");
+        List<FileEntity> fileEntities = repository.findAll();
+        assertThat(fileEntities).hasSize(1);
+        FileEntity savedFileEntity = fileEntities.get(0);
+        assertThat(savedFileEntity.getPath()).isEqualTo("/path/to/file");
+        assertThat(savedFileEntity.getDatatype()).isEqualTo("text");
+        assertThat(savedFileEntity.getModuleOwner()).isEqualTo("Owner Name"); // Assert new field
+        assertThat(savedFileEntity.getModuleLead()).isEqualTo("Lead Name");   // Assert new field
     }
 }

@@ -3,11 +3,13 @@ package lk.anan.ri.dataviewer.controller;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+//import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
-
+import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Optional;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,6 +45,8 @@ public class FileEntityControllerTests {
         fileEntity.setId(1L);
         fileEntity.setPath("/path/to/file");
         fileEntity.setDatatype("text");
+        fileEntity.setModuleOwner("Owner Name"); 
+        fileEntity.setModuleLead("Lead Name");   
     }
 
     @Test
@@ -54,6 +58,8 @@ public class FileEntityControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].path").value("/path/to/file"))
                 .andExpect(jsonPath("$[0].datatype").value("text"))
+                .andExpect(jsonPath("$[0].moduleOwner").value("Owner Name")) 
+                .andExpect(jsonPath("$[0].moduleLead").value("Lead Name")) 
                 .andDo(print());
     }
 
@@ -66,6 +72,8 @@ public class FileEntityControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.path").value("/path/to/file"))
                 .andExpect(jsonPath("$.datatype").value("text"))
+                .andExpect(jsonPath("$.moduleOwner").value("Owner Name")) 
+                .andExpect(jsonPath("$.moduleLead").value("Lead Name"))  
                 .andDo(print());
     }
 
@@ -80,6 +88,8 @@ public class FileEntityControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.path").value("/path/to/file"))
                 .andExpect(jsonPath("$.datatype").value("text"))
+                .andExpect(jsonPath("$.moduleOwner").value("Owner Name")) 
+                .andExpect(jsonPath("$.moduleLead").value("Lead Name"))  
                 .andDo(print());
     }
 
@@ -91,6 +101,8 @@ public class FileEntityControllerTests {
 
         fileEntity.setPath("/new/path/to/file");
         fileEntity.setDatatype("binary");
+        fileEntity.setModuleOwner("New Owner"); 
+        fileEntity.setModuleLead("New Lead");
 
         mockMvc.perform(put("/api/files/1")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -98,6 +110,8 @@ public class FileEntityControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.path").value("/new/path/to/file"))
                 .andExpect(jsonPath("$.datatype").value("binary"))
+                .andExpect(jsonPath("$.moduleOwner").value("New Owner")) 
+                .andExpect(jsonPath("$.moduleLead").value("New Lead"))
                 .andDo(print());
     }
 

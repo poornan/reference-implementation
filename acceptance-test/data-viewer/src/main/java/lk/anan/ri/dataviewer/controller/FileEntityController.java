@@ -44,6 +44,8 @@ public class FileEntityController {
             FileEntity updatedFile = fileEntity.get();
             updatedFile.setPath(fileDetails.getPath());
             updatedFile.setDatatype(fileDetails.getDatatype());
+            updatedFile.setModuleOwner(fileDetails.getModuleOwner()); 
+            updatedFile.setModuleLead(fileDetails.getModuleLead());   
             return ResponseEntity.ok(repository.save(updatedFile));
         } else {
             return ResponseEntity.notFound().build();
