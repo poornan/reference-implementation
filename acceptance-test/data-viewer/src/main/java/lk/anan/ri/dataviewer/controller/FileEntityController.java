@@ -39,7 +39,7 @@ public class FileEntityController {
     @PostMapping
     public FileEntity createFile(@RequestBody FileEntity fileEntity) {
         String currentUser = request.getUserPrincipal().getName();
-        fileEntity.setCreatedBy(currentUser);
+        fileEntity.setConfirmedBy(currentUser);
         return repository.save(fileEntity);
     }
 
@@ -52,7 +52,11 @@ public class FileEntityController {
             updatedFile.setDatatype(fileDetails.getDatatype());
             updatedFile.setDevelopers(fileDetails.getDevelopers()); 
             updatedFile.setLead(fileDetails.getLead());   
-            updatedFile.setCreatedBy(fileDetails.getCreatedBy());
+            updatedFile.setConfirmedBy(fileDetails.getConfirmedBy());
+            updatedFile.setApprovedBy(fileDetails.getApprovedBy());
+            updatedFile.setConfirmed(fileDetails.isConfirmed());
+            updatedFile.setApproved(fileDetails.isApproved());
+            updatedFile.setDeleted(fileDetails.isDeleted());
             return ResponseEntity.ok(repository.save(updatedFile));
         } else {
             return ResponseEntity.notFound().build();
@@ -63,7 +67,9 @@ public class FileEntityController {
     public ResponseEntity<Void> deleteFile(@PathVariable Long id) {
         Optional<FileEntity> fileEntity = repository.findById(id);
         if (fileEntity.isPresent()) {
-            repository.delete(fileEntity.get());
+            FileEntity en = fileEntity.get();
+            en.setDeleted(true);
+            repository.save(en);
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();

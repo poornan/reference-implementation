@@ -43,7 +43,7 @@ public class WebController {
     @PostMapping
     public String createFile(FileEntity fileEntity) {
         String currentUser = request.getUserPrincipal().getName();
-        fileEntity.setCreatedBy(currentUser); 
+        fileEntity.setConfirmedBy(currentUser); 
         repository.save(fileEntity);
         return "redirect:/files";
     }
@@ -68,7 +68,11 @@ public class WebController {
             updatedFile.setDatatype(fileDetails.getDatatype());
             updatedFile.setDevelopers(fileDetails.getDevelopers());
             updatedFile.setLead(fileDetails.getLead());
-            updatedFile.setCreatedBy(fileDetails.getCreatedBy());
+            updatedFile.setConfirmedBy(fileDetails.getConfirmedBy());
+            updatedFile.setApprovedBy(fileDetails.getApprovedBy());
+            updatedFile.setConfirmed(fileDetails.isConfirmed());
+            updatedFile.setApproved(fileDetails.isApproved());
+            updatedFile.setDeleted(fileDetails.isDeleted());
             repository.save(updatedFile);
         }
         return "redirect:/files";
@@ -78,7 +82,9 @@ public class WebController {
     public String deleteFile(@PathVariable Long id) {
         Optional<FileEntity> fileEntity = repository.findById(id);
         if (fileEntity.isPresent()) {
-            repository.delete(fileEntity.get());
+            FileEntity updatedFile = fileEntity.get();
+            updatedFile.setDeleted(true); 
+            repository.save(updatedFile);
         }
         return "redirect:/files";
     }
@@ -101,5 +107,27 @@ public class WebController {
         } else {
             return "redirect:/files";
         }
+    }
+
+    @PostMapping("/{id}/confirm")
+    public String confirmFile(@PathVariable Long id) {
+        Optional<FileEntity> fileEntity = repository.findById(id);
+        if (fileEntity.isPresent()) {
+            FileEntity updatedFile = fileEntity.get();
+            updatedFile.setConfirmed(true);
+            repository.save(updatedFile);
+        }
+        return "redirect:/files";
+    }
+
+    @PostMapping("/{id}/approve")
+    public String approveFile(@PathVariable Long id) {
+        Optional<FileEntity> fileEntity = repository.findById(id);
+        if (fileEntity.isPresent()) {
+            FileEntity updatedFile = fileEntity.get();
+            updatedFile.setApproved(true);
+            repository.save(updatedFile);
+        }
+        return "redirect:/files";
     }
 }

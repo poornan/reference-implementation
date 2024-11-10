@@ -13,19 +13,32 @@
                 <th>Datatype</th>
                 <th>Developers</th>
                 <th>Lead</th>
+                <th>Confirmed By</th>
+                <th>Approved By</th>
                 <th>Actions</th>
                 <th>Path</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="file : ${files}">
+            <tr th:each="file : ${files}" th:if="${!file.deleted}">
                 <td th:text="${file.id}"></td>
                 <td th:text="${file.datatype}"></td>
                 <td th:text="${file.developers}"></td>
                 <td th:text="${file.lead}"></td>
+                <td th:text="${file.confirmedBy}"></td>
+                <td th:text="${file.approvedBy}"></td>
                 <td>
-                    <a th:href="@{/files/edit/{id}(id=${file.id})}">Edit</a>
+                    <!-- <a th:href="@{/files/edit/{id}(id=${file.id})}">Edit</a> -->
                     <a th:href="@{/files/delete/{id}(id=${file.id})}">Delete</a>
+                    <a th:href="@{/files/{id}/confirm(id=${file.id})}">Confirm</a>
+                    <a th:href="@{/files/{id}/approve(id=${file.id})}">Approve</a>
+                    
+                    <!-- <form th:action="@{/files/{id}/confirm(id=${file.id})}" method="post" style="display:inline;">
+                        <button type="submit">Confirm</button>
+                    </form>
+                    <form th:action="@{/files/{id}/approve(id=${file.id})}" method="post" style="display:inline;">
+                        <button type="submit">Approve</button>
+                    </form> -->
                 </td>
                 <td>
                     <a th:href="@{/files/view/{id}(id=${file.id})}" th:text="${file.path}"></a>

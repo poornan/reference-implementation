@@ -45,7 +45,7 @@ public class FileIndexer {
                                     FileEntity fileEntity = new FileEntity();
                                     fileEntity.setPath(path.toString());
                                     fileEntity.setDatatype(path.getParent().getParent().getFileName().toString());
-                                    fileEntity.setCreatedBy("System");
+                                    // fileEntity.setConfirmedBy("System");
                                     fileEntityRepository.save(fileEntity);
                                     try {
                                         Path indexedFile = path.getParent().resolve(".indexed");

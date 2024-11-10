@@ -16,18 +16,26 @@
         </div>
         <div>
             <label for="datatype">Datatype:</label>
-            <input type="text" id="datatype" th:field="*{datatype}" />
+            <input type="text" id="datatype" th:field="*{datatype}" th:class="input-disabled"/>
         </div>
         <div>
             <label for="developers">Developers:</label>
-            <input type="text" id="developers" th:field="*{developers}" />
+            <input type="text" id="developers" th:field="*{developers}" th:class="input-disabled"/>
         </div>
         <div>
             <label for="lead">Lead:</label>
-            <input type="text" id="lead" th:field="*{lead}" />
+            <input type="text" id="lead" th:field="*{lead}" th:class="input-disabled"/>
+        </div>
+        <!-- <div>
+            <label for="confirmed">Confirmed:</label>
+            <input type="checkbox" id="confirmed" th:field="*{confirmed}" />
         </div>
         <div>
-            <button type="submit">Save</button>
+            <label for="approved">Approved:</label>
+            <input type="checkbox" id="approved" th:field="*{approved}" />
+        </div> -->
+        <div>
+            <button type="submit" th:class="input-disabled">Save</button>
         </div>
     </form>
     <a href="/files">Back to List</a>
