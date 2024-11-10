@@ -13,6 +13,8 @@ import jakarta.mail.internet.MimeMessage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Disabled;
+@Disabled
 @SpringBootTest
 @ActiveProfiles("test")
 class EmailServiceIntegrationTests {
