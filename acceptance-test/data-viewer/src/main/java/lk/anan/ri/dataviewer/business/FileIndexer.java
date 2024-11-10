@@ -39,18 +39,30 @@ public class FileIndexer {
                         return parent == null || !Files.exists(parent.resolve(".indexed"));
                     })
                     .forEach(path -> {
-                        FileEntity fileEntity = new FileEntity();
-                        fileEntity.setPath(path.toString());
-                        fileEntity.setDatatype(path.getParent().getParent().getFileName().toString());
-                        // fileEntity.setModuleOwner("Owner Name " + Math.random());
-                        // fileEntity.setModuleLead("Lead Name");
-                        fileEntity.setCreatedBy("System");
-                        fileEntityRepository.save(fileEntity);
-                        try {
-                            Files.write(path.getParent().resolve(".indexed"), fileEntity.getId().toString().getBytes());
+                        try (Stream<Path> stream = Files.list(path.getParent())) {
+                            stream.filter(p -> p.toString().endsWith(".xml"))
+                                  .forEach(p -> {
+                                    FileEntity fileEntity = new FileEntity();
+                                    fileEntity.setPath(path.toString());
+                                    fileEntity.setDatatype(path.getParent().getParent().getFileName().toString());
+                                    fileEntity.setCreatedBy("System");
+                                    fileEntityRepository.save(fileEntity);
+                                    try {
+                                        Path indexedFile = path.getParent().resolve(".indexed");
+                                        if (Files.exists(indexedFile)) {
+                                            Files.write(indexedFile, ("," + fileEntity.getId().toString()).getBytes(), StandardOpenOption.APPEND);
+                                        } else {
+                                            Files.write(indexedFile, fileEntity.getId().toString().getBytes());
+                                        }
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                  });
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+                        
+                        
                     });
         } catch (IOException e) {
             e.printStackTrace();
