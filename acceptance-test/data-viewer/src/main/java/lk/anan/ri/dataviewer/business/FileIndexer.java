@@ -8,7 +8,6 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 
 import lk.anan.ri.dataviewer.model.FileEntity;
 import lk.anan.ri.dataviewer.repository.FileEntityRepository;
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
