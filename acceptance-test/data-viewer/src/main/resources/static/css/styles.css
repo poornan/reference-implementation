@@ -16,9 +16,9 @@ h1 {
 }
 
 table {
-    width: 80%;
-    margin: 20px auto;
+    width: 100%;
     border-collapse: collapse;
+    table-layout: fixed; /* Ensures the table layout is fixed */
 }
 
 table, th, td {
@@ -28,6 +28,9 @@ table, th, td {
 th, td {
     padding: 8px;
     text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 th {
@@ -118,3 +121,12 @@ a.back-link {
     border: 1px solid #ced4da;
     color: #6c757d;
 }
+
+th:nth-child(1), td:nth-child(1) { width: 1%; }
+th:nth-child(2), td:nth-child(2) { width: 35%; }
+th:nth-child(3), td:nth-child(3) { width: 10%; }
+th:nth-child(4), td:nth-child(4) { width: 10%; }
+th:nth-child(5), td:nth-child(5) { width: 10%; }
+th:nth-child(6), td:nth-child(6) { width: 10%; }
+th:nth-child(7), td:nth-child(7) { width: 14%; }
+th:nth-child(8), td:nth-child(8) { width: 10%; }

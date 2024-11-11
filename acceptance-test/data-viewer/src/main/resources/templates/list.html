@@ -3,20 +3,29 @@
 <head>
     <title>File List</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <script th:src="@{/js/tablesort.min.js}"></script>
 </head>
 <body>
     <h1>Acceptance Test Data File List</h1>
-    <table>
+    <!-- <div>
+        <label for="datatypeFilter">Filter by Datatype:</label>
+        <input type="text" id="datatypeFilter" placeholder="filter datatype">
+    </div> -->
+    <table id="fileTable">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Datatype</th>
+                <th data-sort-method="string">Datatype
+                    <div>
+                        <input type="text" id="datatypeFilter" placeholder="filter datatype">
+                    </div>
+                </th>
                 <th>Developers</th>
                 <th>Lead</th>
                 <th>Confirmed By</th>
                 <th>Approved By</th>
                 <th>Actions</th>
-                <th>Path</th>
+                <th>Path(View)</th>
             </tr>
         </thead>
         <tbody>
@@ -29,8 +38,8 @@
                 <td th:text="${file.approvedBy}"></td>
                 <td>
                     <!-- <a th:href="@{/files/edit/{id}(id=${file.id})}">Edit</a> -->
-                    <a th:href="@{/files/delete/{id}(id=${file.id})}">Delete</a>
-                    <a th:href="@{/files/{id}/confirm(id=${file.id})}">Confirm</a>
+                    <a th:href="@{/files/delete/{id}(id=${file.id})}">Delete</a> |
+                    <a th:href="@{/files/{id}/confirm(id=${file.id})}">Confirm</a> |
                     <a th:href="@{/files/{id}/approve(id=${file.id})}">Approve</a>
                     
                     <!-- <form th:action="@{/files/{id}/confirm(id=${file.id})}" method="post" style="display:inline;">
@@ -46,11 +55,28 @@
             </tr>
         </tbody>
     </table>
-    <a href="/files/new">Add New File</a>
+    <!-- <a href="/files/new">Add New File</a> -->
     <div class="logout-container">
         <form th:action="@{/logout}" method="post">
             <button type="submit" class="logout-btn">Logout</button>
         </form>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            new Tablesort(document.getElementById('fileTable'));
+            document.getElementById('datatypeFilter').addEventListener('input', function() {
+                var filter = this.value.toLowerCase();
+                var rows = document.querySelectorAll('#fileTable tbody tr');
+                rows.forEach(function(row) {
+                    var datatype = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                    if (datatype.includes(filter)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

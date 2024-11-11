@@ -1,78 +1,43 @@
 package lk.anan.ri.dataviewer.controller;
 
-import java.util.List;
-import java.util.Optional;
-
+import lk.anan.ri.dataviewer.model.FileEntity;
+import lk.anan.ri.dataviewer.service.FileEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
-import lk.anan.ri.dataviewer.model.FileEntity;
-import lk.anan.ri.dataviewer.repository.FileEntityRepository;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/files")
 public class FileEntityController {
 
     @Autowired
-    private FileEntityRepository repository;
-
-    @Autowired
-    private HttpServletRequest request;
+    private FileEntityService fileEntityService;
 
     @GetMapping
     public List<FileEntity> getAllFiles() {
-        return repository.findAll();
+        return fileEntityService.getAllFiles();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FileEntity> getFileById(@PathVariable Long id) {
-        Optional<FileEntity> fileEntity = repository.findById(id);
-        if (fileEntity.isPresent()) {
-            return ResponseEntity.ok(fileEntity.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public FileEntity getFileById(@PathVariable Long id) {
+        return fileEntityService.getFileById(id);
     }
 
     @PostMapping
     public FileEntity createFile(@RequestBody FileEntity fileEntity) {
-        String currentUser = request.getUserPrincipal().getName();
-        fileEntity.setConfirmedBy(currentUser);
-        return repository.save(fileEntity);
+        return fileEntityService.createFile(fileEntity);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<FileEntity> updateFile(@PathVariable Long id, @RequestBody FileEntity fileDetails) {
-        Optional<FileEntity> fileEntity = repository.findById(id);
-        if (fileEntity.isPresent()) {
-            FileEntity updatedFile = fileEntity.get();
-            updatedFile.setPath(fileDetails.getPath());
-            updatedFile.setDatatype(fileDetails.getDatatype());
-            updatedFile.setDevelopers(fileDetails.getDevelopers()); 
-            updatedFile.setLead(fileDetails.getLead());   
-            updatedFile.setConfirmedBy(fileDetails.getConfirmedBy());
-            updatedFile.setApprovedBy(fileDetails.getApprovedBy());
-            updatedFile.setConfirmed(fileDetails.isConfirmed());
-            updatedFile.setApproved(fileDetails.isApproved());
-            updatedFile.setDeleted(fileDetails.isDeleted());
-            return ResponseEntity.ok(repository.save(updatedFile));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(fileEntityService.updateFile(id, fileDetails));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFile(@PathVariable Long id) {
-        Optional<FileEntity> fileEntity = repository.findById(id);
-        if (fileEntity.isPresent()) {
-            FileEntity en = fileEntity.get();
-            en.setDeleted(true);
-            repository.save(en);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        fileEntityService.deleteFile(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,21 +14,21 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lk.anan.ri.dataviewer.model.FileEntity;
-import lk.anan.ri.dataviewer.repository.FileEntityRepository;
+import lk.anan.ri.dataviewer.service.FileEntityService;
 
 @Controller
 @RequestMapping("/files")
 public class WebController {
 
     @Autowired
-    private FileEntityRepository repository;
+    private FileEntityService fileEntityService;
 
     @Autowired
     private HttpServletRequest request;
 
     @GetMapping
     public String getAllFiles(Model model) {
-        List<FileEntity> files = repository.findAll();
+        List<FileEntity> files = fileEntityService.getAllFiles();
         model.addAttribute("files", files);
         return "list";
     }
@@ -43,57 +42,47 @@ public class WebController {
     @PostMapping
     public String createFile(FileEntity fileEntity) {
         String currentUser = request.getUserPrincipal().getName();
-        fileEntity.setConfirmedBy(currentUser); 
-        repository.save(fileEntity);
+        fileEntity.setConfirmedBy(currentUser);
+        fileEntityService.createFile(fileEntity);
         return "redirect:/files";
     }
 
     @GetMapping("/edit/{id}")
     public String editFileForm(@PathVariable Long id, Model model) {
-        Optional<FileEntity> fileEntity = repository.findById(id);
-        if (fileEntity.isPresent()) {
-            model.addAttribute("file", fileEntity.get());
+        try {
+            FileEntity fileEntity = fileEntityService.getFileById(id);
+            model.addAttribute("file", fileEntity);
             return "form";
-        } else {
+        } catch (RuntimeException e) {
             return "redirect:/files";
         }
     }
 
     @PostMapping("/edit/{id}")
     public String updateFile(@PathVariable Long id, FileEntity fileDetails) {
-        Optional<FileEntity> fileEntity = repository.findById(id);
-        if (fileEntity.isPresent()) {
-            FileEntity updatedFile = fileEntity.get();
-            updatedFile.setPath(fileDetails.getPath());
-            updatedFile.setDatatype(fileDetails.getDatatype());
-            updatedFile.setDevelopers(fileDetails.getDevelopers());
-            updatedFile.setLead(fileDetails.getLead());
-            updatedFile.setConfirmedBy(fileDetails.getConfirmedBy());
-            updatedFile.setApprovedBy(fileDetails.getApprovedBy());
-            updatedFile.setConfirmed(fileDetails.isConfirmed());
-            updatedFile.setApproved(fileDetails.isApproved());
-            updatedFile.setDeleted(fileDetails.isDeleted());
-            repository.save(updatedFile);
+        try {
+            fileEntityService.updateFile(id, fileDetails);
+            return "redirect:/files";
+        } catch (RuntimeException e) {
+            return "redirect:/files";
         }
-        return "redirect:/files";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteFile(@PathVariable Long id) {
-        Optional<FileEntity> fileEntity = repository.findById(id);
-        if (fileEntity.isPresent()) {
-            FileEntity updatedFile = fileEntity.get();
-            updatedFile.setDeleted(true); 
-            repository.save(updatedFile);
+        try {
+            fileEntityService.deleteFile(id);
+            return "redirect:/files";
+        } catch (RuntimeException e) {
+            return "redirect:/files";
         }
-        return "redirect:/files";
     }
 
     @GetMapping("/view/{id}")
     public String viewFile(@PathVariable Long id, Model model) {
-        Optional<FileEntity> fileEntity = repository.findById(id);
-        if (fileEntity.isPresent()) {
-            String path = fileEntity.get().getPath();
+        try {
+            FileEntity fileEntity = fileEntityService.getFileById(id);
+            String path = fileEntity.getPath();
             try {
                 String xmlContent = new String(Files.readAllBytes(Paths.get(path)));
                 XmlMapper xmlMapper = new XmlMapper();
@@ -104,30 +93,28 @@ public class WebController {
                 model.addAttribute("xmlContent", "Error reading file: " + e.getMessage());
             }
             return "view";
-        } else {
+        } catch (RuntimeException e) {
             return "redirect:/files";
         }
     }
 
-    @PostMapping("/{id}/confirm")
+    @GetMapping("/{id}/confirm")
     public String confirmFile(@PathVariable Long id) {
-        Optional<FileEntity> fileEntity = repository.findById(id);
-        if (fileEntity.isPresent()) {
-            FileEntity updatedFile = fileEntity.get();
-            updatedFile.setConfirmed(true);
-            repository.save(updatedFile);
+        try {
+            fileEntityService.confirmFile(id, request.getUserPrincipal().getName());
+            return "redirect:/files";
+        } catch (RuntimeException e) {
+            return "redirect:/files";
         }
-        return "redirect:/files";
     }
 
-    @PostMapping("/{id}/approve")
+    @GetMapping("/{id}/approve")
     public String approveFile(@PathVariable Long id) {
-        Optional<FileEntity> fileEntity = repository.findById(id);
-        if (fileEntity.isPresent()) {
-            FileEntity updatedFile = fileEntity.get();
-            updatedFile.setApproved(true);
-            repository.save(updatedFile);
+        try {
+            fileEntityService.approveFile(id, request.getUserPrincipal().getName());
+            return "redirect:/files";
+        } catch (RuntimeException e) {
+            return "redirect:/files";
         }
-        return "redirect:/files";
     }
 }
