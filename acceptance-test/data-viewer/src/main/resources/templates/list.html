@@ -1,12 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>File List</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
     <script th:src="@{/js/tablesort.min.js}"></script>
 </head>
+
 <body>
-    <h1>Acceptance Test Data File List</h1>
+    <!-- <h1>Acceptance Test Data File List</h1> -->
+    <div class="header" style="display: flex; justify-content: center; align-items: center;">
+        <h1>Acceptance Test Data File List</h1>
+        <div>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
+    <div>
+        <label for="datePicker">Select Date:</label>
+        <input type="date" id="datePicker" name="datePicker" onchange="location.href='/files/date/' + this.value">
+    </div>
     <!-- <div>
         <label for="datatypeFilter">Filter by Datatype:</label>
         <input type="text" id="datatypeFilter" placeholder="filter datatype">
@@ -14,16 +28,25 @@
     <table id="fileTable">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>
+                    <div>
+                        <span>ID</span>
+                        <div>
+                            <span id="sum"></span>
+                            <span id="of">of</span>
+                            <span id="total"></span>
+                        </div>
+                    </div>
+                </th>
                 <th data-sort-method="string">Datatype
                     <div>
                         <input type="text" id="datatypeFilter" placeholder="filter datatype">
                     </div>
                 </th>
-                <th>Developers</th>
-                <th>Lead</th>
+                <!-- <th>Developers</th> -->
+                <!-- <th>Lead</th>
                 <th>Confirmed By</th>
-                <th>Approved By</th>
+                <th>Approved By</th> -->
                 <th>Actions</th>
                 <th>Path(View)</th>
             </tr>
@@ -31,17 +54,34 @@
         <tbody>
             <tr th:each="file : ${files}" th:if="${!file.deleted}">
                 <td th:text="${file.id}"></td>
-                <td th:text="${file.datatype}"></td>
-                <td th:text="${file.developers}"></td>
-                <td th:text="${file.lead}"></td>
+                <td>
+                    <div>
+                        <div th:each="part, iterStat : ${#strings.arraySplit(file.datatype, '-')}">
+                            <div th:text="${iterStat.index == 0 ? 'Implementation: ' + part : 'Interface: ' + part}">
+                            </div>
+                        </div>
+                        <div><span>ID: </span><span
+                                th:text="${file.id != null ? file.id : 'NA'}"></span></div>
+                        <div><span>Developers: </span><span
+                                th:text="${file.developers != null ? file.developers : 'NA'}"></span></div>
+                        <div><span>Lead: </span><span th:text="${file.lead != null ? file.lead : 'NA'}"></span></div>
+                        <div><span>Confirmed By: </span><span
+                                th:text="${file.confirmedBy != null ? file.confirmedBy : 'NA'}"></span></div>
+                        <div><span>Approved By: </span><span
+                                th:text="${file.approvedBy != null ? file.approvedBy : 'NA'}"></span></div>
+                    </div>
+
+                </td>
+                <!-- <td th:text="${file.developers}"></td> -->
+                <!-- <td th:text="${file.lead}"></td>
                 <td th:text="${file.confirmedBy}"></td>
-                <td th:text="${file.approvedBy}"></td>
+                <td th:text="${file.approvedBy}"></td> -->
                 <td>
                     <!-- <a th:href="@{/files/edit/{id}(id=${file.id})}">Edit</a> -->
                     <a th:href="@{/files/delete/{id}(id=${file.id})}">Delete</a> |
                     <a th:href="@{/files/{id}/confirm(id=${file.id})}">Confirm</a> |
                     <a th:href="@{/files/{id}/approve(id=${file.id})}">Approve</a>
-                    
+
                     <!-- <form th:action="@{/files/{id}/confirm(id=${file.id})}" method="post" style="display:inline;">
                         <button type="submit">Confirm</button>
                     </form>
@@ -50,33 +90,19 @@
                     </form> -->
                 </td>
                 <td>
-                    <a th:href="@{/files/view/{id}(id=${file.id})}" th:text="${file.path}"></a>
+                    <a th:href="@{/files/view/{id}(id=${file.id})}" th:text="${file.path}"
+                        style="direction: ltr; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></a>
                 </td>
             </tr>
         </tbody>
     </table>
     <!-- <a href="/files/new">Add New File</a> -->
-    <div class="logout-container">
+    <!-- <div class="logout-container">
         <form th:action="@{/logout}" method="post">
             <button type="submit" class="logout-btn">Logout</button>
         </form>
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            new Tablesort(document.getElementById('fileTable'));
-            document.getElementById('datatypeFilter').addEventListener('input', function() {
-                var filter = this.value.toLowerCase();
-                var rows = document.querySelectorAll('#fileTable tbody tr');
-                rows.forEach(function(row) {
-                    var datatype = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
-                    if (datatype.includes(filter)) {
-                        row.style.display = '';
-                    } else {
-                        row.style.display = 'none';
-                    }
-                });
-            });
-        });
-    </script>
+    </div>-->
+    <script th:src="@{/js/custom.js}"></script> 
 </body>
+
 </html>

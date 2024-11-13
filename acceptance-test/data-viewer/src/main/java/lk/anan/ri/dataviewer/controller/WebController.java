@@ -3,9 +3,12 @@ package lk.anan.ri.dataviewer.controller;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +33,15 @@ public class WebController {
     public String getAllFiles(Model model) {
         List<FileEntity> files = fileEntityService.getAllFiles();
         model.addAttribute("files", files);
+        return "list";
+    }
+
+    @GetMapping("/date/{dateCreated}")
+    public String getFilesByDateCreated(@PathVariable String dateCreated, Model model) {
+        LocalDate date = LocalDate.parse(dateCreated);
+        List<FileEntity> files = fileEntityService.getFilesByDateCreated(date.atStartOfDay());
+        model.addAttribute("files", files);
+        model.addAttribute("dateCreated", dateCreated);
         return "list";
     }
 
@@ -78,6 +90,7 @@ public class WebController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN') or principal.username == 'admin'")
     @GetMapping("/view/{id}")
     public String viewFile(@PathVariable Long id, Model model) {
         try {

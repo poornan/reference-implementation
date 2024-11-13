@@ -14,9 +14,11 @@ import java.util.Map;
 import java.util.stream.Stream;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.time.ZoneId;
 
 @Component
 public class FileIndexer {
+    private static final String INDEXED = ".indexed1";
     @Value("${filescan.path}")
     private String fileScanPath;
     @Autowired
@@ -36,34 +38,46 @@ public class FileIndexer {
                     .filter(path -> path.toString().endsWith(".xml"))
                     .filter(path -> {
                         Path parent = path.getParent();
-                        return parent == null || !Files.exists(parent.resolve(".indexed"));
+                        return parent == null || !Files.exists(parent.resolve(INDEXED));
                     })
                     .forEach(path -> {
                         try (Stream<Path> stream = Files.list(path.getParent())) {
                             stream.filter(p -> p.toString().endsWith(".xml"))
-                                  .forEach(p -> {
-                                    FileEntity fileEntity = new FileEntity();
-                                    fileEntity.setPath(path.toString());
-                                    fileEntity.setDatatype(path.getParent().getParent().getFileName().toString());
-                                    // fileEntity.setConfirmedBy("System");
-                                    fileEntityRepository.save(fileEntity);
-                                    try {
-                                        Path indexedFile = path.getParent().resolve(".indexed");
-                                        if (Files.exists(indexedFile)) {
-                                            Files.write(indexedFile, ("," + fileEntity.getId().toString()).getBytes(), StandardOpenOption.APPEND);
-                                        } else {
-                                            Files.write(indexedFile, fileEntity.getId().toString().getBytes());
+                                    .forEach(p -> {
+                                        FileEntity fileEntity = new FileEntity();
+                                        fileEntity.setPath(path.toString());
+                                        fileEntity.setDatatype(path.getParent().getParent().getFileName().toString());
+                                        calculateFileds(path, fileEntity);
+                                        fileEntityRepository.save(fileEntity);
+                                        try {
+                                            Path indexedFile = path.getParent().resolve(INDEXED);
+                                            if (Files.exists(indexedFile)) {
+                                                Files.write(indexedFile,
+                                                        ("," + fileEntity.getId().toString()).getBytes(),
+                                                        StandardOpenOption.APPEND);
+                                            } else {
+                                                Files.write(indexedFile, fileEntity.getId().toString().getBytes());
+                                            }
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
                                         }
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                  });
+                                    });
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        
-                        
+
                     });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void calculateFileds(Path path, FileEntity fileEntity) {
+        try {
+            fileEntity.setDateCreated(
+                    Files.readAttributes(path, BasicFileAttributes.class)
+                            .creationTime().toInstant().atZone(ZoneId.systemDefault())
+                            .toLocalDateTime());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,7 +88,6 @@ public class FileIndexer {
         scanAndIndexFiles();
         watchDirectory(Paths.get(fileScanPath));
     }
-
 
     public void watchDirectory(Path startPath) throws IOException, InterruptedException {
         registerAll(startPath);
@@ -96,7 +109,8 @@ public class FileIndexer {
 
                 System.out.println("Event kind:" + kind + ". File affected: " + child + ".");
 
-                // If a directory is created, and watching recursively, then register it and its sub-directories
+                // If a directory is created, and watching recursively, then register it and its
+                // sub-directories
                 if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
                     try {
                         if (Files.isDirectory(child, LinkOption.NOFOLLOW_LINKS)) {
@@ -108,7 +122,7 @@ public class FileIndexer {
                 }
 
                 // if (Files.isRegularFile(child) && child.toString().endsWith(".xml")) {
-                    scanAndIndexFiles();
+                scanAndIndexFiles();
                 // }
             }
 
@@ -136,7 +150,8 @@ public class FileIndexer {
     }
 
     private void register(Path dir) throws IOException {
-        WatchKey key = dir.register(watchService, StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
+        WatchKey key = dir.register(watchService, StandardWatchEventKinds.ENTRY_CREATE,
+                StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
         watchKeys.put(key, dir);
     }
 }

@@ -1,5 +1,7 @@
 package lk.anan.ri.dataviewer.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,7 +23,7 @@ public class FileEntity {
     private boolean confirmed = false;
     private boolean approved = false;
     private boolean deleted = false;
-
+    private LocalDateTime dateCreated;
     // Getters and Setters
     public Long getId() {
         return id;
@@ -101,5 +103,13 @@ public class FileEntity {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public LocalDateTime getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(LocalDateTime dateCreated) {
+        this.dateCreated = dateCreated;
     }
 }

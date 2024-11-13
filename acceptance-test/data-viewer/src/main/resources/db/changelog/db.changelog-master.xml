@@ -37,7 +37,16 @@
         </addColumn>
     </changeSet>
     <!-- New changeSet to update path size -->
-    <!-- <changeSet id="3" author="yourname">
+    <changeSet id="3" author="yourname">
         <modifyDataType tableName="file_entity" columnName="path" newDataType="VARCHAR(5000)"/>
-    </changeSet> -->
+    </changeSet>
+
+    <!-- New changeSet to add the dateCreated column -->
+    <changeSet id="4" author="yourname">
+        <addColumn tableName="file_entity">
+            <column name="date_created" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
